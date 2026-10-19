@@ -282,10 +282,8 @@ pub fn is_valid_registry_quorum(
     {
         return false;
     }
-    let active_validators =
-        u64::from_le_bytes(account.data[48..56].try_into().unwrap_or([0; 8]));
-    let total_active_stake =
-        u64::from_le_bytes(account.data[64..72].try_into().unwrap_or([0; 8]));
+    let active_validators = u64::from_le_bytes(account.data[48..56].try_into().unwrap_or([0; 8]));
+    let total_active_stake = u64::from_le_bytes(account.data[64..72].try_into().unwrap_or([0; 8]));
     active_validators >= 2 && total_active_stake > 0
 }
 
@@ -415,11 +413,7 @@ mod tests {
             executable: false,
             rent_epoch: 0,
         };
-        assert!(!is_valid_nullifier_account(
-            &wrong_owner,
-            &program_id,
-            &nf0
-        ));
+        assert!(!is_valid_nullifier_account(&wrong_owner, &program_id, &nf0));
 
         // Canonical program-owned NullifierAccount with matching nf0 passes.
         let canonical = Account {
@@ -471,4 +465,3 @@ mod tests {
         assert!(!is_valid_registry_quorum(&wrong_owner, &program_id));
     }
 }
-
