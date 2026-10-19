@@ -534,7 +534,7 @@ impl TransactVerificationCoordinator {
         let mut fallback = HashSet::new();
         {
             let sel = self.leader_selector.read().await;
-            for v in sel.get_all_validators() {
+            for v in sel.get_validators_by_weight() {
                 if let Some(w) = &v.wallet_pubkey {
                     if !equivocators.contains(w) {
                         fallback.insert(w.clone());
